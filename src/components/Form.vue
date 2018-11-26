@@ -22,7 +22,7 @@
                     </vue-tel-input>
                 </div>
                 <div class="contacts-right">
-                    <textarea rows="4" :class="(showDanger || showCounter) ? 'input form__input error' : 'input form__input'" @input="checkMessage()" @blur="hideError()" v-model="message.fromMessage" placeholder="Текст сообщения"></textarea>
+                    <textarea rows="4" :class="(showDanger || showMessageError) ? 'input form__input error' : 'input form__input'" @input="checkMessage()" @blur="hideError()" v-model="message.fromMessage" placeholder="Текст сообщения"></textarea>
                     <p style="text-align: left; margin-bottom: 20px;" v-if="showCounter">Осталось: {{ message.fromMessageLeft - message.fromMessage.length }}</p>
                     <button class="btn contacts__btn" @click.prevent="postMessage">Отправить</button>
                 </div>
@@ -193,6 +193,10 @@
 
             showCounter(){
                 return (this.message.fromMessageLeft - this.message.fromMessage.length) < 250;
+            },
+
+            showMessageError(){
+                return (this.message.fromMessageLeft - this.message.fromMessage.length) === 0 || (this.message.fromMessageLeft - this.message.fromMessage.length) < 0;
             }
         },
         components: {
